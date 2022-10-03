@@ -15,13 +15,13 @@ from scipy import stats
 
 
 engine = create_engine("mysql+pymysql://{}:{}@{}:{}/{}".format(
-        'dev_wuzhijing', 'f7jBYm9fWqma45Ox7Iv0', '172.16.1.13', '3306', 'zyyx'))
+        'dev_name', 'xxxxxxxxxx', 'IP', 'port', 'zyyx'))
 
 
 def get_data_from_SQL():
     # 配置连接SQL数据库的信息
     engine = create_engine("mysql+pymysql://{}:{}@{}:{}/{}".format(
-        'dev_wuzhijing', 'f7jBYm9fWqma45Ox7Iv0', '172.16.1.13', '3306', 'zyyx'))
+        'dev_name', 'xxxxxxxxxx', 'IP', 'port', 'zyyx'))
     # 提取数据的SQL命令
     sql_query = "SELECT a.report_id, a.stock_code, a.stock_name, b.industry_code, b.industry_name, a.report_type, a.author, a.current_create_date, a.previous_create_date,a.report_year, a.current_forecast_np, a.previous_forecast_np, a.np_adjust_rate, a.entrytime, b.into_date, b.out_date FROM rpt_earnings_adjust a JOIN (SELECT stock_code, industry_code, industry_name, MAX(into_date) as into_date, out_date FROM qt_indus_constituents WHERE industry_level = 1 AND standard_code = 905 GROUP BY stock_code) b ON a.stock_code = b.stock_code WHERE TIMESTAMPDIFF(day, a.current_create_date, a.entrytime) < 5 AND TIMESTAMPDIFF(YEAR, a.current_create_date, a.previous_create_date) < 1 AND YEAR(a.current_create_date) = report_year AND a.current_create_date>='20100101' AND a.current_create_date<='20220831' AND report_type >21 ORDER BY current_create_date ASC "
 
@@ -44,7 +44,7 @@ def filter_extreme_3sigma(series,n=3): #3 sigma
 df['np_adjust_rate1'] = filter_extreme_3sigma(df['np_adjust_rate'])
 df['np_adjust_rate1'].describe()
 
-#把有缺失的股票提出来，可以单独作为一组数据（后面考虑）
+#把有缺失的股票提出来，可以单独作为一组数据
 df_nan = df[df['np_adjust_rate1'].isnull()]
 
 #缺失值用平均值替代
