@@ -15,13 +15,13 @@ from scipy import stats
 
 
 engine = create_engine("mysql+pymysql://{}:{}@{}:{}/{}".format(
-        'dev_wuzhijing', 'f7jBYm9fWqma45Ox7Iv0', '172.16.1.13', '3306', 'zyyx'))
+        'dev_name', 'xxxxxxxxxx', 'IP', 'port', 'zyyx'))
 
 
 def get_data_from_SQL():
     # 配置连接SQL数据库的信息
     engine = create_engine("mysql+pymysql://{}:{}@{}:{}/{}".format(
-        'dev_wuzhijing', 'f7jBYm9fWqma45Ox7Iv0', '172.16.1.13', '3306', 'zyyx'))
+        'dev_name', 'xxxxxxxxxx', 'IP', 'port', 'zyyx'))
     # 提取数据的SQL命令
     sql_query = "SELECT * FROM rpt_rating_adjust WHERE TIMESTAMPDIFF(day, current_create_date, entrytime) < 5 AND TIMESTAMPDIFF(YEAR, current_create_date, previous_create_date) < 1 AND current_create_date>='20100101' AND current_create_date<='20220831' AND rating_adjust_mark = 2  AND current_gg_rating = 7 ORDER BY current_create_date ASC "
 
